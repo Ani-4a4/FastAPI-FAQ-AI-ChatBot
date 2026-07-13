@@ -21,8 +21,6 @@ async function sendMessage() {
     input.value = "";
 
     try{
-                // CHANGED: /ask not /chat (that's your backend route), relative URL so it
-        // works deployed too, and send business_id (backend 404s without it).
         const response = await fetch("/ask", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -33,7 +31,6 @@ async function sendMessage() {
         });
  
         const data = await response.json();
-        // CHANGED: backend returns {"response": ...}, not {"reply": ...}.
         // Fall back to data.detail so backend errors are visible instead of "undefined".
         const answer = data.response || data.detail || "Something went wrong.";
         messages.innerHTML += `<p><b>Bot:</b> ${answer}</p>`;
